@@ -1,6 +1,8 @@
 package com.example.hello.controller;
 
 import com.example.hello.dto.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,11 +13,16 @@ public class ResponseApiController {
     public String text(@RequestParam String account){
         return account;
     }
-    //json
+    //json 오브젝트를 내려주는 방법
     //request가 오면 -> object mapper -> object -> method -> object -> object mapper -> json -> response
     @PostMapping("/json")
     public User json(@RequestBody User user){
-        return user;
+        return user; //200 ok
+    }
+    @PutMapping("/put")
+    public ResponseEntity<User> put(@RequestBody User user){
+        //resource가 생성되면 명확하게 값(201)을 내려준다. 아래코드처럼 바디에 데이터를 넣어줄 수도 있다.
+         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
 }
